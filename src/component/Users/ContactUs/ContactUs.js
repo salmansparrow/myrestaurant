@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import theme from "@/styles/theme";
 
 const ContactUs = () => {
   const dispatch = useDispatch();
@@ -55,12 +56,12 @@ const ContactUs = () => {
       }}
     >
       <Typography
-        className="ffpoppins"
         variant="h3"
         gutterBottom
         textAlign={"center"}
         mt={5}
         sx={{
+          fontFamily: theme.typography.poppins,
           backgroundImage: "linear-gradient(135deg, #ffcc00, #ff6600)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",

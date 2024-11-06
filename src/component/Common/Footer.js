@@ -1,4 +1,11 @@
-import { Box, Container, Grid, Typography, IconButton } from "@mui/material";
+import {
+  Box,
+  Container,
+  Grid,
+  Typography,
+  IconButton,
+  Button,
+} from "@mui/material";
 import {
   Facebook,
   Twitter,
@@ -8,9 +15,20 @@ import {
   Phone,
   Email,
 } from "@mui/icons-material";
+import Link from "next/link";
+import { useRouter } from "next/router";
 // import backgroundImage from "/public/assets/images/footer-background.jpg"; // Example background image
 
+const pages = [
+  { name: "Home", path: "/" },
+  { name: "Menu", path: "/menu" },
+  { name: "Events", path: "/events" },
+  { name: "About", path: "/about" },
+  { name: "Contact", path: "/contactus" },
+];
+
 function Footer() {
+  const router = useRouter();
   return (
     <Box
       sx={{
@@ -70,52 +88,25 @@ function Footer() {
             >
               Quick Links
             </Typography>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-              <Typography
-                variant="body2"
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { textDecoration: "underline" },
-                }}
-              >
-                Home
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { textDecoration: "underline" },
-                }}
-              >
-                Menu
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { textDecoration: "underline" },
-                }}
-              >
-                Reservations
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { textDecoration: "underline" },
-                }}
-              >
-                Events
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { textDecoration: "underline" },
-                }}
-              >
-                Contact
-              </Typography>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              {pages.map((page) => (
+                <Link href={page.path} key={page.name} passHref>
+                  <Button
+                    sx={{
+                      color:
+                        router.pathname === page.path ? "#b50810" : "black", // Active color
+                      fontWeight:
+                        router.pathname === page.path ? "bold" : "normal", // Active font weight
+                      textTransform: "capitalize",
+                      margin: "0 10px",
+                    }}
+                    // onClick={() => handleNavItems(page.path)} // Handle navigation
+                    className="ffroboto"
+                  >
+                    {page.name}
+                  </Button>
+                </Link>
+              ))}
             </Box>
           </Grid>
 

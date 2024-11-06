@@ -20,6 +20,7 @@ import CartDrawer from "./CartDrawer";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"; // Ensure this is imported
 import { useDispatch, useSelector } from "react-redux";
 import { toggleCart } from "@/pages/feature/Cart/cartSlice";
+import { Badge } from "@mui/material";
 
 const pages = [
   { name: "Home", path: "/" },
@@ -36,6 +37,10 @@ function MainNavbar() {
 
   const dispatch = useDispatch();
   const open = useSelector((state) => state.cart.isOpen); // Get cart open state from Redux
+  const cartItems = useSelector((state) => state.cart.items);
+
+  // Calculate total number of items
+  const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   const handleCartClick = () => {
     dispatch(toggleCart()); // Toggle cart drawer open/close
@@ -139,8 +144,8 @@ function MainNavbar() {
                       textTransform: "capitalize",
                       margin: "0 10px",
                     }}
-                    className="ffroboto"
                     onClick={() => handleNavItems(page.path)} // Handle navigation
+                    className="ffroboto"
                   >
                     {page.name}
                   </Button>
@@ -157,7 +162,11 @@ function MainNavbar() {
                     variant="outlined"
                     color="success"
                     onClick={handleLogin}
-                    sx={{ marginRight: 1, fontSize: "1rem" }} // Margin for spacing
+                    sx={{
+                      marginRight: 1,
+                      fontSize: { xs: "0.8rem", md: "1rem" }, // Responsive font size
+                      minWidth: "100px", // Set a minimum width to prevent line breaks
+                    }}
                   >
                     Login
                   </Button>
@@ -165,7 +174,11 @@ function MainNavbar() {
                     variant="outlined"
                     color="success"
                     onClick={handleSignUp}
-                    sx={{ marginRight: 1, fontSize: "1rem" }} // Margin for spacing
+                    sx={{
+                      marginRight: 1,
+                      fontSize: { xs: "0.8rem", md: "1rem" }, // Responsive font size
+                      minWidth: "100px", // Set a minimum width to prevent line breaks
+                    }}
                   >
                     Sign Up
                   </Button>
@@ -181,23 +194,31 @@ function MainNavbar() {
               {/* Cart drawer icon */}
               <Box>
                 <Button color="inherit" onClick={handleCartClick}>
-                  <ShoppingCartIcon />
+                  <Badge badgeContent={totalItems} color="success">
+                    <ShoppingCartIcon />
+                  </Badge>
                 </Button>
               </Box>
 
               {/* "Book a Table" Button for large screens */}
-              <Button
-                variant="contained"
-                color="green"
-                sx={{
-                  marginLeft: 1,
-                  display: { xs: "none", md: "block" },
-                }}
-                className="ffpoppins"
-                onClick={handleLogout} // This can also be used to log out
-              >
-                Book a Table
-              </Button>
+              <Link href="/book-a-table" style={{ textDecoration: "none" }}>
+                <Button
+                  variant="contained"
+                  color="green"
+                  sx={{
+                    marginLeft: 1,
+                    display: { xs: "none", md: "block" }, // Make it visible on all screens
+                    color: "white",
+                    fontSize: { xs: "0.8rem", md: "12px", lg: "1rem" }, // Responsive font size
+                    minWidth: { xs: "80px", md: "120px" }, // Responsive minWidth
+                    padding: { xs: "8px 12px", md: "10px 16px" }, // Responsive padding
+                  }}
+                  className="ffpoppins"
+                  onClick={handleLogout} // This can also be used to log out
+                >
+                  Book a Table
+                </Button>
+              </Link>
             </Box>
           </Toolbar>
         </Container>

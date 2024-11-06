@@ -1,9 +1,9 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
-import cartReducer from "../cartSlice"; // Ensure the path is correct
-import eventFormReducer from "../../EventForm/eventFormSlice"; // Ensure the path is correct
-import contactUsReducer from "../../ContactUs/contactSlice";
+import cartReducer from "../Cart/cartSlice"; // Ensure the path is correct
+import eventFormReducer from "../EventForm/eventFormSlice"; // Ensure the path is correct
+import contactUsReducer from "../ContactUs/contactSlice";
 
 // Combine the reducers into one root reducer
 const rootReducer = combineReducers({

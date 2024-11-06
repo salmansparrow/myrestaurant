@@ -15,22 +15,39 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromCart, toggleCart } from "@/pages/feature/Cart/cartSlice";
+import {
+  removeFromCart,
+  toggleCart,
+  increaseQty,
+  decreaseQty,
+} from "@/pages/feature/Cart/cartSlice";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { useRouter } from "next/router";
 
 function CartDrawer({ isOpen, onClose }) {
   const cartItems = useSelector((state) => state.cart.items);
   const totalAmount = useSelector((state) => state.cart.totalAmount); // Access totalAmount from the store
-  console.log(totalAmount);
-
   const dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     // Save totalAmount to localStorage whenever it changes
     localStorage.setItem("totalAmount", totalAmount.toFixed(2));
-  }, [totalAmount]);
+    localStorage.setItem("cartItems", JSON.stringify(cartItems)); // Save cart items to localStorage
+  }, [totalAmount, cartItems]);
 
   const handleClose = () => {
     dispatch(toggleCart());
+    router.push("/checkout");
+  };
+
+  const handleIncreaseQty = (id) => {
+    dispatch(increaseQty(id));
+  };
+
+  const handleDecreaseQty = (id) => {
+    dispatch(decreaseQty(id));
   };
 
   const handleRemoveFromCart = (id) => {
@@ -74,29 +91,55 @@ function CartDrawer({ isOpen, onClose }) {
           validCartItems.map((item) => (
             <ListItem
               key={item.id}
-              sx={{ display: "flex", alignItems: "center" }}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
             >
-              <ListItemAvatar>
-                <Avatar
-                  src={item.image}
-                  alt={item.name}
-                  sx={{ width: 50, height: 50 }}
+              <Box display="flex" alignItems="center">
+                <ListItemAvatar>
+                  <Avatar
+                    src={item.image}
+                    alt={item.name}
+                    sx={{ width: 50, height: 50 }}
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={item.name}
+                  secondary={`Rs. ${item.price.toFixed(2)}`}
+                  sx={{ ml: 1 }}
                 />
-              </ListItemAvatar>
-              <ListItemText
-                primary={item.name}
-                secondary={`Rs. ${item.price.toFixed(2)} (Qty: ${
-                  item.quantity
-                })`}
-                sx={{ ml: 1 }}
-              />
-              <IconButton
-                edge="end"
-                color="error"
-                onClick={() => handleRemoveFromCart(item.id)}
-              >
-                <DeleteIcon />
-              </IconButton>
+              </Box>
+
+              <Box display="flex" alignItems="center">
+                {/* Decrease Quantity Button */}
+                <IconButton
+                  onClick={() => handleDecreaseQty(item.id)}
+                  disabled={item.quantity <= 1}
+                >
+                  <RemoveIcon />
+                  {/* <RemoveIcon /> */}
+                </IconButton>
+
+                <Typography variant="body2" sx={{ mx: 1 }}>
+                  {item.quantity}
+                </Typography>
+
+                {/* Increase Quantity Button */}
+                <IconButton onClick={() => handleIncreaseQty(item.id)}>
+                  <AddIcon />
+                </IconButton>
+
+                {/* Remove Item Button */}
+                <IconButton
+                  edge="end"
+                  color="error"
+                  onClick={() => handleRemoveFromCart(item.id)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Box>
             </ListItem>
           ))
         )}
@@ -108,10 +151,7 @@ function CartDrawer({ isOpen, onClose }) {
       {validCartItems.length > 0 && (
         <Box display="flex" justifyContent="space-between" mb={2}>
           <Typography variant="h6">Total:</Typography>
-          <Typography variant="h6">
-            Rs. {totalAmount.toFixed(2)}
-          </Typography>{" "}
-          {/* Use totalAmount here */}
+          <Typography variant="h6">Rs. {totalAmount.toFixed(2)}</Typography>
         </Box>
       )}
 

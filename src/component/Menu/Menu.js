@@ -284,7 +284,7 @@ function Menu() {
       sx={{ display: "flex", flexDirection: "column", padding: "10px 20px" }}
     >
       <AppBar
-        position="static"
+        position="sticky"
         sx={{ padding: "10px 0", marginTop: "20px" }}
         className="green"
       >
