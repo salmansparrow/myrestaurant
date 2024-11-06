@@ -18,7 +18,6 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import cashImage from "/public/assets/images/checkout/Cash.png";
 import cardImage from "/public/assets/images/checkout/Card.png";
-import { useForm } from "react-hook-form";
 import theme from "@/styles/theme";
 
 function Checkout() {
