@@ -36,7 +36,6 @@ function Checkout() {
 
     setCartItems(storedCartItems);
     setTotalAmount(parseFloat(storedTotalAamount));
-    console.log(setCartItems);
   }, []);
 
   console.log(cartItems);
