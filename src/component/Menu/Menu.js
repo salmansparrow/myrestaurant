@@ -27,7 +27,7 @@ import {
   addToCart,
   openCart,
   toggleCart,
-} from "@/pages/feature/Cart/cartSlice";
+} from "../../../feature/Cart/cartSlice";
 
 function Menu() {
   const [selectedCategory, setSelectedCategory] = useState("All");

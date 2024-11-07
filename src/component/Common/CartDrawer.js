@@ -20,7 +20,7 @@ import {
   toggleCart,
   increaseQty,
   decreaseQty,
-} from "@/pages/feature/Cart/cartSlice";
+} from "../../../feature/Cart/cartSlice";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { useRouter } from "next/router";

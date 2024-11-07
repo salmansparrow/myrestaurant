@@ -1,7 +1,7 @@
 import "@/styles/globals.css"; // Global styles
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material"; // MUI components
 import { Provider } from "react-redux"; // Redux provider
-import { store, persistor } from "./feature/Store/Store"; // Store and persistor
+import { store, persistor } from "../../feature/store/Store"; // Store and persistor
 import { PersistGate } from "redux-persist/integration/react"; // PersistGate for Redux-Persist
 import "@fontsource/poppins"; // Import Poppins font
 import theme from "@/styles/theme";

@@ -2,7 +2,7 @@ import Layout from "@/component/Layout/Layout";
 import {
   clearFormData,
   setFormData,
-} from "@/pages/feature/EventForm/eventFormSlice";
+} from "../../../../feature/EventForm/eventFormSlice";
 import {
   Box,
   Button,

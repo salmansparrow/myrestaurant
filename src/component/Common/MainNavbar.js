@@ -19,7 +19,7 @@ import { useRouter } from "next/router";
 import CartDrawer from "./CartDrawer";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"; // Ensure this is imported
 import { useDispatch, useSelector } from "react-redux";
-import { toggleCart } from "@/pages/feature/Cart/cartSlice";
+import { toggleCart } from "../../../feature/Cart/cartSlice";
 import { Badge } from "@mui/material";
 
 const pages = [

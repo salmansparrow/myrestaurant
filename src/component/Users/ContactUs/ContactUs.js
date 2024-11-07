@@ -8,7 +8,7 @@ import { Email } from "@mui/icons-material";
 import {
   clearContactUs,
   setContactUsData,
-} from "@/pages/feature/ContactUs/contactSlice";
+} from "../../../../feature/ContactUs/contactSlice";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
