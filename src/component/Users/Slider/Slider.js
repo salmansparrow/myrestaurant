@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import chargha from "/public/assets/images/special/chargha.jpg"; // Adjust the import
+import Link from "next/link";
 
 // Sample data for the specials
 const specialsData = [
@@ -100,22 +101,24 @@ const SpecialSection = () => {
                   </Typography>
                 </Box>
                 {/* Order Online Button */}
-                <Button
-                  variant="contained"
-                  color="success" // Use green color
-                  className="hoverButton ffroboto" // Class for hover effect
-                  sx={{
-                    position: "absolute",
-                    bottom: "50%", // Adjust position as needed
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    opacity: 0, // Initially hidden
-                    zIndex: 3, // Ensure it appears above other elements
-                    transition: "opacity 0.8s ease", // Transition for smoothness
-                  }}
-                >
-                  Order Online
-                </Button>
+                <Link href="/menu">
+                  <Button
+                    variant="contained"
+                    color="success" // Use green color
+                    className="hoverButton ffroboto" // Class for hover effect
+                    sx={{
+                      position: "absolute",
+                      bottom: "50%", // Adjust position as needed
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      opacity: 0, // Initially hidden
+                      zIndex: 3, // Ensure it appears above other elements
+                      transition: "opacity 0.8s ease", // Transition for smoothness
+                    }}
+                  >
+                    Order Online
+                  </Button>
+                </Link>
               </Box>
             </Card>
           </Grid>

@@ -2,6 +2,7 @@ import { Box, Button, Card, CardMedia, Grid, Typography } from "@mui/material";
 import wedding from "/public/assets/images/catering/wedding.jpg"; // Adjust the import
 import corporate from "/public/assets/images/catering/corporate.jpg"; // Adjust the import
 import banquet from "/public/assets/images/catering/banquet.jpg"; // Adjust the import
+import Link from "next/link";
 
 const cardData = [
   { id: 1, name: "Wedding", image: wedding },
@@ -157,33 +158,30 @@ function Catering() {
             sx={{
               display: "flex",
               justifyContent: "center", // Center the button
-              marginTop: 4, // Add space between text and button
+              py: 4,
             }}
           >
-            <Button
-              variant="contained"
-              color="orangemain"
-              sx={{
-                padding: {
-                  xs: "10px 20px", // Button padding for small screens
-                  sm: "12px 30px",
-                  md: "14px 40px",
-                },
-                fontWeight: "600",
-                fontSize: {
-                  xs: "14px", // Smaller font size on mobile
-                  md: "16px", // Regular font size on medium and above
-                },
-
-                ":hover": {
-                  backgroundColor: "white",
-                },
-                borderRadius: "10px",
-              }}
-              className="ffpoppins"
-            >
-              Book Now
-            </Button>
+            <Link href="/bookevent">
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{
+                  backgroundImage:
+                    "linear-gradient(135deg, #ffcc00, #ff6600) !important",
+                  color: "#fff",
+                  fontWeight: "bold",
+                  top: "30px",
+                  padding: "10px 20px",
+                  borderRadius: "8px",
+                  "&:hover": {
+                    backgroundImage:
+                      "linear-gradient(135deg, #ff6600, #ffcc00)",
+                  },
+                }}
+              >
+                Book an Event
+              </Button>
+            </Link>
           </Box>
         </Box>
       </Box>

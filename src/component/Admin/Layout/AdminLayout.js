@@ -26,6 +26,7 @@ const drawerWidth = 240;
 
 const pages = [
   { name: "Dashboard", path: "/admin/dashboard" },
+  { name: "Add Category", path: "/admin/addcategory" },
   { name: "Add Meal", path: "/admin/addmealitem" },
   { name: "Events", path: "/admin/event" },
   { name: "Book A Table", path: "/admin/book-a-table" },

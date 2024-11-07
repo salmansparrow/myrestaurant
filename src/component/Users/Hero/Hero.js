@@ -2,6 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Link from "next/link";
 
 function HeroSection() {
   return (
@@ -116,24 +117,26 @@ function HeroSection() {
         </Typography>
 
         {/* Order Online Button */}
-        <Button
-          variant="contained"
-          color="green"
-          size="large"
-          sx={{
-            backgroundColor: "green", // Green button
-            color: "white",
-            paddingX: 4, // Extra horizontal padding for the button
-            paddingY: 1.5, // Vertical padding for better touch targets
-            fontSize: { xs: "1rem", sm: "1.25rem" }, // Responsive font size for button text
-            "&:hover": {
-              backgroundColor: "darkgreen", // Darken on hover
-            },
-          }}
-          className="ffroboto"
-        >
-          Order Online
-        </Button>
+        <Link href="/menu">
+          <Button
+            variant="contained"
+            color="green"
+            size="large"
+            sx={{
+              backgroundColor: "green", // Green button
+              color: "white",
+              paddingX: 4, // Extra horizontal padding for the button
+              paddingY: 1.5, // Vertical padding for better touch targets
+              fontSize: { xs: "1rem", sm: "1.25rem" }, // Responsive font size for button text
+              "&:hover": {
+                backgroundColor: "darkgreen", // Darken on hover
+              },
+            }}
+            className="ffroboto"
+          >
+            Order Online
+          </Button>
+        </Link>
       </Box>
     </Box>
   );

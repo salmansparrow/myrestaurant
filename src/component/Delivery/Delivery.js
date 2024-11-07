@@ -2,6 +2,7 @@ import { Box, Grid, Typography, Button } from "@mui/material";
 import deliveryimg from "/public/assets/images/delivery/delivery.png";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 function Delivery() {
   const [isLoaded, setIsLoaded] = useState(false); // Track when the component has mounted
@@ -132,25 +133,27 @@ function Delivery() {
         >
           Feeling hungry? Order Online for fastest delivery.
         </Typography>
-        <Button
-          variant="text"
-          color="success" // Use the green color defined in your theme
-          sx={{
-            marginTop: 2,
-            border: "2px solid",
-            borderRadius: 3,
-            padding: "4px 12px", // Smaller padding for a compact button
-            fontSize: "0.875rem", // Smaller font size
-            flexShrink: 0, // Prevent button from stretching
-            "&:hover": {
-              backgroundColor: "rgba(76, 175, 80, 0.8)", // Darken the button on hover
-            },
-            width: "200px",
-            height: "50px",
-          }}
-        >
-          Order Online
-        </Button>
+        <Link href="/menu">
+          <Button
+            variant="text"
+            color="success" // Use the green color defined in your theme
+            sx={{
+              marginTop: 2,
+              border: "2px solid",
+              borderRadius: 3,
+              padding: "4px 12px", // Smaller padding for a compact button
+              fontSize: "0.875rem", // Smaller font size
+              flexShrink: 0, // Prevent button from stretching
+              "&:hover": {
+                backgroundColor: "rgba(76, 175, 80, 0.8)", // Darken the button on hover
+              },
+              width: "200px",
+              height: "50px",
+            }}
+          >
+            Order Online
+          </Button>
+        </Link>
       </Grid>
     </Box>
   );

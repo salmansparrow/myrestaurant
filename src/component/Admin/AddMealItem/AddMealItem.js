@@ -11,12 +11,10 @@ import {
 
 const AddMealItem = () => {
   const [category, setCategory] = useState({
-    categoryId: "",
     categoryName: "",
   });
 
   const [mealItem, setMealItem] = useState({
-    itemId: "",
     itemName: "",
     itemDescription: "",
     itemPrice: "",
@@ -50,27 +48,42 @@ const AddMealItem = () => {
     }));
   };
 
-  // Mock form submission
-  const handleSubmit = (e) => {
+  // Form submission with POST request to backend
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Mocked logic: combine category and meal item for submission
-    const formData = {
-      category,
-      mealItem,
-    };
+    const formData = new FormData();
+    formData.append("categoryName", category.categoryName);
+    formData.append("itemName", mealItem.itemName);
+    formData.append("itemDescription", mealItem.itemDescription);
+    formData.append("itemPrice", mealItem.itemPrice);
+    if (mealItem.itemImage) {
+      formData.append("file", mealItem.itemImage); // Use "file" key to match backend multer handling
+    }
 
-    console.log("Form Data Submitted: ", formData);
+    try {
+      const response = await fetch("/api/controllers/FoodItemsController", {
+        method: "POST",
+        body: formData,
+      });
 
-    // Reset form after submission
-    setCategory({ categoryId: "", categoryName: "" });
-    setMealItem({
-      itemId: "",
-      itemName: "",
-      itemDescription: "",
-      itemPrice: "",
-      itemImage: null,
-    });
+      const result = await response.json();
+      if (response.ok) {
+        console.log("Food item added:", result);
+        // Clear form
+        setCategory({ categoryName: "" });
+        setMealItem({
+          itemName: "",
+          itemDescription: "",
+          itemPrice: "",
+          itemImage: null,
+        });
+      } else {
+        console.error("Error adding food item:", result.message);
+      }
+    } catch (error) {
+      console.error("Request failed:", error);
+    }
   };
 
   return (
@@ -81,21 +94,9 @@ const AddMealItem = () => {
         </Typography>
 
         <form onSubmit={handleSubmit}>
-          {/* Category Section */}
           <Box mb={3}>
             <Typography variant="h6">Category</Typography>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Category ID"
-                  name="categoryId"
-                  variant="outlined"
-                  value={category.categoryId}
-                  onChange={handleCategoryChange}
-                  required
-                />
-              </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
@@ -110,21 +111,9 @@ const AddMealItem = () => {
             </Grid>
           </Box>
 
-          {/* Meal Item Section */}
           <Box mb={3}>
             <Typography variant="h6">Meal Item Details</Typography>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Item ID"
-                  name="itemId"
-                  variant="outlined"
-                  value={mealItem.itemId}
-                  onChange={handleMealItemChange}
-                  required
-                />
-              </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
