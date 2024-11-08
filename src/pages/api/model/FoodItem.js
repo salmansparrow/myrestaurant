@@ -1,52 +1,19 @@
 import mongoose from "mongoose";
-import { v4 as uuidv4 } from "uuid"; // Importing uuid to generate custom IDs
 
-const categorySchema = new mongoose.Schema(
-  {
-    categoryName: { type: String, required: true },
+const FoodItemSchema = new mongoose.Schema({
+  categoryId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category",
+    required: true,
   },
-  {
-    timestamps: true,
-  }
-);
-
-const Category = mongoose.model("Category", categorySchema);
-
-// FoodItem Schema with custom itemId
-const foodItemSchema = new mongoose.Schema(
-  {
-    itemId: { type: String, unique: true, required: true },
-    categoryId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
-      required: true,
-    },
-
-    itemName: {
-      type: String,
-      required: true,
-    },
-    itemDescription: {
-      type: String,
-      required: true,
-    },
-    itemPrice: {
-      type: Number,
-      required: true,
-    },
-    itemPrice: { type: Number, required: true },
-    imageUrl: { type: String, required: true },
-  },
-  { timestamps: true }
-);
-
-foodItemSchema.pre("save", function (next) {
-  if (!this.itemId) {
-    this.itemId = uuidv4();
-  }
-  next();
+  itemName: { type: String, required: true },
+  itemDescription: { type: String, required: true },
+  itemPrice: { type: Number, required: true },
+  imageURL: { type: String, required: true },
 });
 
-const foodItem = mongoose.model("FoodItem", foodItemSchema);
+// Check if the model already exists before defining it
+const FoodItem =
+  mongoose.models.FoodItem || mongoose.model("FoodItem", FoodItemSchema);
 
-export { Category, foodItem };
+export default FoodItem;

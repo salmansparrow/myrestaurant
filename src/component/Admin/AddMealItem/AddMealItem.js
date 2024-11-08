@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   TextField,
@@ -7,13 +7,15 @@ import {
   Card,
   CardContent,
   Grid,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
 
 const AddMealItem = () => {
-  const [category, setCategory] = useState({
-    categoryName: "",
-  });
-
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [mealItem, setMealItem] = useState({
     itemName: "",
     itemDescription: "",
@@ -21,14 +23,23 @@ const AddMealItem = () => {
     itemImage: null,
   });
 
-  // Handle category input change
-  const handleCategoryChange = (e) => {
-    const { name, value } = e.target;
-    setCategory((prevCategory) => ({
-      ...prevCategory,
-      [name]: value,
-    }));
-  };
+  // Fetch categories from the backend
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("/api/categories");
+        const result = await response.json();
+        if (response.ok) {
+          setCategories(result);
+        } else {
+          console.error("Error fetching categories:", result.message);
+        }
+      } catch (error) {
+        console.error("Request failed:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   // Handle meal item input change
   const handleMealItemChange = (e) => {
@@ -37,6 +48,11 @@ const AddMealItem = () => {
       ...prevMealItem,
       [name]: value,
     }));
+  };
+
+  // Handle category selection change
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
   };
 
   // Handle image file change
@@ -49,20 +65,21 @@ const AddMealItem = () => {
   };
 
   // Form submission with POST request to backend
+  // Inside your handleSubmit function
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("categoryName", category.categoryName);
+    formData.append("categoryId", selectedCategory);
     formData.append("itemName", mealItem.itemName);
     formData.append("itemDescription", mealItem.itemDescription);
     formData.append("itemPrice", mealItem.itemPrice);
     if (mealItem.itemImage) {
-      formData.append("file", mealItem.itemImage); // Use "file" key to match backend multer handling
+      formData.append("file", mealItem.itemImage);
     }
 
     try {
-      const response = await fetch("/api/controllers/FoodItemsController", {
+      const response = await fetch("/api/foodItem", {
         method: "POST",
         body: formData,
       });
@@ -71,7 +88,7 @@ const AddMealItem = () => {
       if (response.ok) {
         console.log("Food item added:", result);
         // Clear form
-        setCategory({ categoryName: "" });
+        setSelectedCategory("");
         setMealItem({
           itemName: "",
           itemDescription: "",
@@ -98,15 +115,20 @@ const AddMealItem = () => {
             <Typography variant="h6">Category</Typography>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  fullWidth
-                  label="Category Name"
-                  name="categoryName"
-                  variant="outlined"
-                  value={category.categoryName}
-                  onChange={handleCategoryChange}
-                  required
-                />
+                <FormControl fullWidth variant="outlined" required>
+                  <InputLabel>Category</InputLabel>
+                  <Select
+                    label="Category"
+                    value={selectedCategory}
+                    onChange={handleCategoryChange}
+                  >
+                    {categories.map((category) => (
+                      <MenuItem key={category._id} value={category._id}>
+                        {category.categoryName}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </Grid>
             </Grid>
           </Box>

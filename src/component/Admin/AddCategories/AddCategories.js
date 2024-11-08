@@ -9,18 +9,20 @@ import {
 } from "@mui/material";
 
 const AddCategories = () => {
+  // State for category name
   const [categoryName, setCategoryName] = useState("");
 
-  // Handle input change
-  const handleInputChange = (e) => {
-    setCategoryName(e.target.value);
+  // Function to handle input change
+  const handleInputChange = (event) => {
+    setCategoryName(event.target.value);
   };
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // Function to handle form submission
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
     try {
+      // Send a POST request to the server to create a new category
       const response = await fetch("/api/categories", {
         method: "POST",
         headers: {
@@ -29,15 +31,19 @@ const AddCategories = () => {
         body: JSON.stringify({ categoryName }),
       });
 
-      const result = await response.json();
+      const data = await response.json();
+
       if (response.ok) {
-        console.log("Category added:", result);
-        setCategoryName(""); // Clear the input field after adding
+        // Clear the input and show a success message
+        setCategoryName("");
+        alert(data.message); // Optionally, use a better notification system
       } else {
-        console.error("Error adding category:", result.message);
+        // Handle error message
+        alert(data.message);
       }
     } catch (error) {
-      console.error("Request failed:", error);
+      console.error("Error adding category:", error);
+      alert("An error occurred while adding the category.");
     }
   };
 
